@@ -1,0 +1,8 @@
+.DS_Store
+tags
+*~
+._*
+*.swp
+*.swo
+nbproject
+.project
