@@ -1,0 +1,28 @@
+#
+# File managed by Chef on <%= node[:fqdn] %>
+#
+
+<VirtualHost *:80>
+  ServerAdmin <%= node[:apache][:contact] %>
+  ServerAlias <%= node[:fqdn] %>
+
+  ProxyPass / http://127.0.0.1:8000/
+  ProxyPassReverse / http://127.0.0.1:8000/
+
+  ErrorLog <%= node[:apache][:log_dir] %>/splunk-error.log 
+
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+
+  CustomLog <%= node[:apache][:log_dir] %>/splunk-access.log combined
+  ServerSignature On
+</VirtualHost>
+
+<Proxy http://127.0.0.1:8000/*>
+  Order Allow,Deny
+  Allow from All
+  Deny from None
+</Proxy>
+
+# vi:filetype=apache:tabstop=2:expandtab
